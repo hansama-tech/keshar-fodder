@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+datasource db {
+  provider = "mongodb" // Can be switched to MySQL or SQLite if preferred
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model DailyTransaction {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  date          DateTime @default(now())
+  fodderType    String // 'Bajari' or 'Makai' – The type of fodder for the transaction
+  buyQuantity   String // Total quantity bought (kg) for the day
+  sellQuantity  String // Total quantity sold (kg) for the day
+  buyAmount     String // Total amount spent on purchases (₹) for the day
+  sellAmount    String? // Total amount earned from sales (₹) for the day
+  stockQuantity String? // Total quantity of fodder left at the end of the day (kg)
+  stockValue    String? // Total value of remaining stock (₹) at the end of the day
+  avgBuyPrice   String? // Average buy price per kilogram (₹) for the day
+  avgSellPrice  String? // Average sell price per kilogram (₹) for the day
+
+  // Helper function to compute total stock value
+  // @computed
+  // getTotalStockValue() {
+  //   return stockQuantity * avgBuyPrice
+  // }
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
