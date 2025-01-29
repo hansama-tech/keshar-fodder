@@ -53,6 +53,7 @@ export default function AddTransactionForm() {
     setSellAmount("");
     setBuyQuantity("");
     setBuyAmount("");
+    setBuyPrice("")
   };
 
   return (
@@ -141,7 +142,7 @@ export default function AddTransactionForm() {
             required
             id="buyPrice"
             type="number"
-            value={buyQuantity}
+            value={buyPrice}
             onChange={(e) => setBuyPrice(e.target.value)}
             placeholder="Enter buy Price"
           />
