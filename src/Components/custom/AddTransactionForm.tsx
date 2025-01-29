@@ -35,7 +35,7 @@ export default function AddTransactionForm() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const FooderData = await axios.post("/api/DailyTransaction", {
+      const FooderData = await axios.post("/api/dailyTransaction", {
         date,
         fodderType,
         sellQuantity,
