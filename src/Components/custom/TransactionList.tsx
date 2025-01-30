@@ -1,19 +1,27 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/Components/ui/table"
+import { useEffect, useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/Components/ui/table";
 // import { DatePicker } from "@/components/ui/date-picker"
-import { Label } from "@/Components/ui/label"
-import { Calendar } from "@/Components/ui/calendar"
+import { Label } from "@/Components/ui/label";
+import { Calendar } from "@/Components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/Components/ui/popover"
-import { Calendar as CalendarIcon } from "lucide-react"
-import { format } from "date-fns"
-import { Button } from "../ui/button"
+} from "@/Components/ui/popover";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
+import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
+import axios from "axios";
 
 // Mock data for demonstration
 const initialTransactions = [
@@ -53,16 +61,33 @@ const initialTransactions = [
     buyQuantity: 900,
     buyAmount: 45000,
   },
-]
+];
 
 export default function TransactionList() {
-  const [transactions, setTransactions] = useState(initialTransactions)
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
+  const [transactionDatas, setTransactionDatas] = useState(initialTransactions);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    new Date()
+  );
   const [date, setDate] = useState<Date | undefined>(new Date());
 
   const filteredTransactions = selectedDate
-    ? transactions.filter((t) => t.date === selectedDate.toISOString().split("T")[0])
-    : transactions
+    ? transactionDatas.filter(
+        (t) => t.date === selectedDate.toISOString().split("T")[0]
+      )
+    : transactionDatas;
+
+  const getTransactionData = async () => {
+    try {
+      const Data = await axios.get("/api/dailyTransaction");
+      setTransactionDatas(Data.data.data);
+    } catch (err) {
+      console.log("something wrong", err);
+    }
+  };
+
+  useEffect(() => {
+    getTransactionData();
+  }, []);
 
   return (
     <div className="bg-white p-6 rounded-lg shadow">
@@ -70,35 +95,35 @@ export default function TransactionList() {
       <div className="mb-4">
         <Label htmlFor="dateFilter">Filter by Date</Label>
         <div>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  className={cn(
-                    "w-[280px] justify-start text-left font-normal",
-                    !date && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {date ? format(date, "PPP") : <span>Pick a date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  selected={date}
-                  onSelect={setDate}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
-          </div>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant={"outline"}
+                className={cn(
+                  "w-[280px] justify-start text-left font-normal",
+                  !date && "text-muted-foreground"
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {date ? format(date, "PPP") : <span>Pick a date</span>}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0">
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+        </div>
         {/* <DatePicker id="dateFilter" selected={selectedDate} onSelect={(date) => setSelectedDate(date)} /> */}
       </div>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Date</TableHead>
+            <TableHead>Date </TableHead>
             <TableHead>Fodder Type</TableHead>
             <TableHead>Sell Quantity (kg)</TableHead>
             <TableHead>Sell Amount (₹)</TableHead>
@@ -107,9 +132,14 @@ export default function TransactionList() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {filteredTransactions.map((transaction) => (
+          {transactionDatas.map((transaction) => (
             <TableRow key={transaction.id}>
-              <TableCell>{transaction.date}</TableCell>
+              <TableCell>
+                {new Date(transaction.date)
+                  .toLocaleDateString("en-GB")
+                  .split("/")
+                  .join("-")}
+              </TableCell>
               <TableCell>{transaction.fodderType}</TableCell>
               <TableCell>{transaction.sellQuantity}</TableCell>
               <TableCell>{transaction.sellAmount}</TableCell>
@@ -120,6 +150,5 @@ export default function TransactionList() {
         </TableBody>
       </Table>
     </div>
-  )
+  );
 }
-

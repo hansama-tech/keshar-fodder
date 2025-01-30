@@ -1,28 +1,85 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/Components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card"
-import { Label } from "@/Components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/Components/ui/select"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/Components/ui/table"
+import { useEffect, useState } from "react";
+import { Button } from "@/Components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
+import { Label } from "@/Components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/Components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/Components/ui/table";
+import axios from "axios";
 
 // Mock data for demonstration
 const transactions = [
-  { id: 1, date: "2023-07-01", type: "Buy", quantity: 1000, amount: 50000, unitPrice: 50 },
-  { id: 2, date: "2023-07-01", type: "Sell", quantity: 500, amount: 30000, unitPrice: 60 },
-  { id: 3, date: "2023-06-30", type: "Buy", quantity: 1500, amount: 75000, unitPrice: 50 },
-  { id: 4, date: "2023-06-30", type: "Sell", quantity: 800, amount: 48000, unitPrice: 60 },
+  {
+    id: 1,
+    date: "2023-07-01",
+    type: "Buy",
+    quantity: 1000,
+    amount: 50000,
+    unitPrice: 50,
+  },
+  {
+    id: 2,
+    date: "2023-07-01",
+    type: "Sell",
+    quantity: 500,
+    amount: 30000,
+    unitPrice: 60,
+  },
+  {
+    id: 3,
+    date: "2023-06-30",
+    type: "Buy",
+    quantity: 1500,
+    amount: 75000,
+    unitPrice: 50,
+  },
+  {
+    id: 4,
+    date: "2023-06-30",
+    type: "Sell",
+    quantity: 800,
+    amount: 48000,
+    unitPrice: 60,
+  },
   // Add more mock transactions as needed
-]
+];
 
 export default function DetailedReports() {
-  const [dateRange, setDateRange] = useState("7")
+  const [dateRange, setDateRange] = useState("7");
 
   const handleExport = () => {
     // Implement export functionality here
-    console.log("Exporting data...")
-  }
+    console.log("Exporting data...");
+  };
+
+  const getTransactionData = async () => {
+    try {
+      const Data = await axios.get("/api/dailyTransaction");
+      console.log(Data,"dhddh");
+    } catch (err) {
+      console.log("something wrong", err);
+    }
+  };
+
+  useEffect(() => {
+    getTransactionData();
+  });
+
+  console.log("dhddh");
 
   return (
     <Card>
@@ -70,6 +127,5 @@ export default function DetailedReports() {
         </Table>
       </CardContent>
     </Card>
-  )
+  );
 }
-

@@ -1,5 +1,6 @@
 import AddTransactionForm from "@/Components/custom/AddTransactionForm";
 import DailySummary from "@/Components/custom/DailySummary";
+import DetailedReports from "@/Components/custom/DetailedReports";
 import Header from "@/Components/custom/Header";
 import StockOverview from "@/Components/custom/StockOverview";
 import TransactionList from "@/Components/custom/TransactionList";
@@ -23,6 +24,7 @@ export default function Home() {
             <DailySummary />
             <StockOverview />
             <VisualReports />
+            {/* <DetailedReports/> */}
           </div>
         </div>
       </main>
