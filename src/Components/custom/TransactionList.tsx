@@ -91,7 +91,7 @@ export default function TransactionList() {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow">
-      <h2 className="text-xl font-semibold mb-4">Daily Transactions</h2>
+      <h2 className="text-xl font-semibold mb-4">દૈનિક વ્યવહારો</h2>
       <div className="mb-4">
         <Label htmlFor="dateFilter">Filter by Date</Label>
         <div>
@@ -123,12 +123,12 @@ export default function TransactionList() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Date </TableHead>
-            <TableHead>Fodder Type</TableHead>
-            <TableHead>Sell Quantity (kg)</TableHead>
-            <TableHead>Sell Amount (₹)</TableHead>
-            <TableHead>Buy Quantity (kg)</TableHead>
-            <TableHead>Buy Amount (₹)</TableHead>
+            <TableHead>તારીખ </TableHead>
+            <TableHead>કતાર પ્રકાર</TableHead>
+            <TableHead>વેચાયેલ જથ્થો (kg)</TableHead>
+            <TableHead>વેચાણ રકમ (₹)</TableHead>
+            <TableHead>ખરીદેલ જથ્થો (kg)</TableHead>
+            <TableHead>ખરીદેલી કુલ રકમ (₹)</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

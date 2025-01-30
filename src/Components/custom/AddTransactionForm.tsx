@@ -61,7 +61,7 @@ export default function AddTransactionForm() {
       onSubmit={handleSubmit}
       className="bg-white p-6 rounded-lg shadow mb-8"
     >
-      <h2 className="text-xl font-semibold mb-4">Add Daily Transaction</h2>
+      <h2 className="text-xl font-semibold mb-4">દૈનિક વ્યવહાર ઉમેરો</h2>
       <div className="space-y-4">
         <div>
           <Label htmlFor="date">Date</Label>
@@ -92,19 +92,19 @@ export default function AddTransactionForm() {
           {/* <DatePicker id="date" selected={date} onSelect={(date) => setDate(date)} /> */}
         </div>
         <div>
-          <Label htmlFor="fodderType">Fodder Type</Label>
+          <Label htmlFor="fodderType">કતાર પ્રકાર</Label>
           <Select value={fodderType} onValueChange={setFodderType}>
             <SelectTrigger id="fodderType">
               <SelectValue placeholder="Select fodder type" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="bajari">Bajari</SelectItem>
-              <SelectItem value="makai">Makai</SelectItem>
+              <SelectItem value="bajari">બાજરી</SelectItem>
+              <SelectItem value="makai">મકાઈ</SelectItem>
             </SelectContent>
           </Select>
         </div>
         <div>
-          <Label htmlFor="sellQuantity">Sell Quantity (kg)</Label>
+          <Label htmlFor="sellQuantity">વેચાયેલ જથ્થો (kg)</Label>
           <Input
             required
             id="sellQuantity"
@@ -115,7 +115,7 @@ export default function AddTransactionForm() {
           />
         </div>
         <div>
-          <Label htmlFor="sellAmount">Sell Amount (₹)</Label>
+          <Label htmlFor="sellAmount">વેચાણ રકમ (₹)</Label>
           <Input
             required
             id="sellAmount"
@@ -126,7 +126,7 @@ export default function AddTransactionForm() {
           />
         </div>
         <div>
-          <Label htmlFor="buyQuantity">Buy Quantity (kg)</Label>
+          <Label htmlFor="buyQuantity">ખરીદેલ જથ્થો (kg)</Label>
           <Input
             required
             id="buyQuantity"
@@ -137,18 +137,7 @@ export default function AddTransactionForm() {
           />
         </div>
         <div>
-          <Label htmlFor="buyQuantity">Buy Price (₹/kg)</Label>
-          <Input
-            required
-            id="buyPrice"
-            type="number"
-            value={buyPrice}
-            onChange={(e) => setBuyPrice(e.target.value)}
-            placeholder="Enter buy Price"
-          />
-        </div>
-        <div>
-          <Label htmlFor="buyAmount">Buy Amount (₹)</Label>
+          <Label htmlFor="buyAmount">ખરીદેલી કુલ રકમ (₹)</Label>
           <Input
             required
             id="buyAmount"
@@ -156,6 +145,17 @@ export default function AddTransactionForm() {
             value={buyAmount}
             onChange={(e) => setBuyAmount(e.target.value)}
             placeholder="Enter buy amount"
+          />
+        </div>
+        <div>
+          <Label htmlFor="buyQuantity">ખરીદેલ કિંમત (₹/kg)</Label>
+          <Input
+            required
+            id="buyPrice"
+            type="number"
+            value={buyPrice}
+            onChange={(e) => setBuyPrice(e.target.value)}
+            placeholder="Enter buy Price"
           />
         </div>
         <Button type="submit">Add Transaction</Button>

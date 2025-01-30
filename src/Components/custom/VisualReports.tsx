@@ -37,7 +37,7 @@ export default function VisualReports() {
   return (
     <Card className="mb-8">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle>Sales and Purchases Over Time</CardTitle>
+        <CardTitle>સમય જતાં વેચાણ અને ખરીદી</CardTitle>
         <Select value={timePeriod} onValueChange={setTimePeriod}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Select time period" />

@@ -83,7 +83,7 @@ export default function StockOverview() {
   return (
     <Card className="mb-8">
       <CardHeader>
-        <CardTitle>Stock Overview</CardTitle>
+        <CardTitle>સ્ટોક ડેશબોર્ડ</CardTitle>
       </CardHeader>
       <CardContent className="p-0 shadow-md">
         <div className="flex flex-col gap-4">
@@ -91,9 +91,9 @@ export default function StockOverview() {
             <h3 className="font-semibold text-center">Total</h3>
             <div className="flex md:flex-row flex-wrap w-full justify-center  gap-4">
               <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
-                <p className="text-center mb-2 font-semibold">Total Buy</p>
+                <p className="text-center mb-2 font-semibold">કુલ ખરીદેલ</p>
                 <p>
-                 Stock:{" "}
+                જથ્થો:{" "}
                   <span className="font-bold text-xl">
                     {" "}
                     {calcData?.bajari.totalBuyQuantity +
@@ -102,7 +102,7 @@ export default function StockOverview() {
                   kg
                 </p>
                 <p>
-                 Amount: ₹{" "}
+                રકમ: ₹{" "}
                   <span className="font-bold text-xl">
                     {calcData?.bajari.totalBuyAmount +
                       calcData?.makai.totalBuyAmount}
@@ -110,9 +110,9 @@ export default function StockOverview() {
                 </p>
               </div>
               <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
-                <p className="text-center mb-2 font-semibold">Total Sell</p>
+                <p className="text-center mb-2 font-semibold">કુલ વેચાણ</p>
                 <p>
-                  Stock:{" "}
+                જથ્થો:{" "}
                   <span className="font-bold text-xl">
                     {calcData?.bajari.totalSellQuantity +
                       calcData?.makai.totalSellQuantity}{" "}
@@ -120,7 +120,7 @@ export default function StockOverview() {
                   kg
                 </p>
                 <p>
-                  Amount: ₹{" "}
+                રકમ: ₹{" "}
                   <span className="font-bold text-xl">
                     {calcData?.bajari.totalSellAmount +
                       calcData?.makai.totalSellAmount}
@@ -130,28 +130,28 @@ export default function StockOverview() {
             </div>
           </div>
           <div className="border-t p-2">
-            <h3 className="font-semibold text-center">Bajari</h3>
+            <h3 className="font-semibold text-center">બાજરી</h3>
             <div className="flex md:flex-row flex-wrap w-full justify-center  gap-4">
               <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
-                <p className="text-center mb-2 font-semibold">Total Buy</p>
+                <p className="text-center mb-2 font-semibold">કુલ ખરીદેલ</p>
                 <p>
-                  Stock:{" "}
+                જથ્થો:{" "}
                   <span className="font-bold text-xl">
                     {calcData?.bajari.totalBuyQuantity}
                   </span>
                   {" "}kg
                 </p>
                 <p>
-                  Amount: ₹{" "}
+                રકમ: ₹{" "}
                   <span className="font-bold text-xl">
                     {calcData?.bajari.totalBuyAmount}
                   </span>
                 </p>
               </div>
               <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
-                <p className="text-center mb-2 font-semibold">Total Sell</p>
+                <p className="text-center mb-2 font-semibold">કુલ વેચાણ</p>
                 <p>
-                  Stock: <span className="font-bold text-xl">{calcData?.bajari.totalSellQuantity}</span>
+                જથ્થો: <span className="font-bold text-xl">{calcData?.bajari.totalSellQuantity}</span>
                   {" "}  kg
                 </p>
                 <p>
@@ -161,35 +161,35 @@ export default function StockOverview() {
             </div>
           </div>
           <div className="border-t p-2 ">
-            <h3 className="font-semibold text-center">Makai</h3>
+            <h3 className="font-semibold text-center">મકાઈ</h3>
             <div className="flex md:flex-row flex-wrap w-full justify-center  gap-4">
               <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
-                <p className="text-center mb-2 font-semibold">Total Buy</p>
+                <p className="text-center mb-2 font-semibold">કુલ ખરીદેલ</p>
                 <p>
-                  Stock:{" "}
+                જથ્થો:{" "}
                   <span className="font-bold text-xl">
                     {calcData?.makai.totalBuyQuantity}{" "}
                   </span>
                   kg
                 </p>
                 <p>
-                  Amount: ₹
+                રકમ: ₹
                   <span className="font-bold text-xl">
                     {calcData?.makai.totalBuyAmount}
                   </span>
                 </p>
               </div>
               <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
-                <p className="text-center mb-2 font-semibold">Total Sell</p>
+                <p className="text-center mb-2 font-semibold">કુલ વેચાણ</p>
                 <p>
-                  Stock:
+                જથ્થો:
                   <span className="font-bold text-xl">
                     {calcData?.makai.totalSellQuantity}{" "}
                   </span>
                   kg
                 </p>
                 <p>
-                  Amount: ₹ ₹
+                રકમ: ₹ ₹
                   <span className="font-bold text-xl">
                     {calcData?.makai.totalSellAmount}
                   </span>
