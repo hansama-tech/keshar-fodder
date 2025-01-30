@@ -79,7 +79,7 @@ export default function TransactionList() {
   const getTransactionData = async () => {
     try {
       const Data = await axios.get("/api/dailyTransaction");
-      setTransactionDatas(Data.data.data);
+      setTransactionDatas(Data.data.data.reverse());
     } catch (err) {
       console.log("something wrong", err);
     }

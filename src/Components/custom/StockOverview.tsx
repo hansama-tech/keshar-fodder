@@ -85,81 +85,119 @@ export default function StockOverview() {
       <CardHeader>
         <CardTitle>Stock Overview</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-0 shadow-md">
         <div className="flex flex-col gap-4">
-          <div>
-            <h3 className="font-semibold">Total</h3>
-            <div className="flex  gap-8">
-              <div className="flex flex-col">
+          <div className=" p-2">
+            <h3 className="font-semibold text-center">Total</h3>
+            <div className="flex md:flex-row flex-wrap w-full justify-center  gap-4">
+              <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
+                <p className="text-center mb-2 font-semibold">Total Buy</p>
                 <p>
-                  Buy Stock:{" "}
-                  {calcData?.bajari.totalBuyQuantity +
-                    calcData?.makai.totalBuyQuantity}{" "}
+                 Stock:{" "}
+                  <span className="font-bold text-xl">
+                    {" "}
+                    {calcData?.bajari.totalBuyQuantity +
+                      calcData?.makai.totalBuyQuantity}{" "}
+                  </span>
                   kg
                 </p>
                 <p>
-                  Buy Amount: ₹
-                  {calcData?.bajari.totalBuyAmount +
-                    calcData?.makai.totalBuyAmount}
+                 Amount: ₹{" "}
+                  <span className="font-bold text-xl">
+                    {calcData?.bajari.totalBuyAmount +
+                      calcData?.makai.totalBuyAmount}
+                  </span>
                 </p>
               </div>
-              <div className="flex flex-col">
+              <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
+                <p className="text-center mb-2 font-semibold">Total Sell</p>
                 <p>
-                  Sell Stock:{" "}
-                  {calcData?.bajari.totalSellQuantity +
-                    calcData?.makai.totalSellQuantity}{" "}
+                  Stock:{" "}
+                  <span className="font-bold text-xl">
+                    {calcData?.bajari.totalSellQuantity +
+                      calcData?.makai.totalSellQuantity}{" "}
+                  </span>
                   kg
                 </p>
                 <p>
-                  sell Amount: ₹
-                  {calcData?.bajari.totalSellAmount +
-                    calcData?.makai.totalSellAmount}
+                  Amount: ₹{" "}
+                  <span className="font-bold text-xl">
+                    {calcData?.bajari.totalSellAmount +
+                      calcData?.makai.totalSellAmount}
+                  </span>
                 </p>
               </div>
             </div>
           </div>
-          <div>
-            <h3 className="font-semibold">Bajari</h3>
-            <div className="flex  gap-8">
-              <div className="flex flex-col">
-                <p>Buy Stock: {calcData?.bajari.totalBuyQuantity} kg</p>
-                <p>Buy Amount: ₹{calcData?.bajari.totalBuyAmount}</p>
+          <div className="border-t p-2">
+            <h3 className="font-semibold text-center">Bajari</h3>
+            <div className="flex md:flex-row flex-wrap w-full justify-center  gap-4">
+              <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
+                <p className="text-center mb-2 font-semibold">Total Buy</p>
+                <p>
+                  Stock:{" "}
+                  <span className="font-bold text-xl">
+                    {calcData?.bajari.totalBuyQuantity}
+                  </span>
+                  kg
+                </p>
+                <p>
+                  Amount: ₹{" "}
+                  <span className="font-bold text-xl">
+                    {calcData?.bajari.totalBuyAmount}
+                  </span>
+                </p>
               </div>
-              <div className="flex flex-col">
-                <p>Sell Stock: {calcData?.bajari.totalSellQuantity} kg</p>
-                <p>sell Amount: ₹{calcData?.bajari.totalSellAmount}</p>
+              <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
+                <p className="text-center mb-2 font-semibold">Total Sell</p>
+                <p>
+                  Stock: <span className="font-bold text-xl">{calcData?.bajari.totalSellQuantity}</span>
+                  {" "}  kg
+                </p>
+                <p>
+                 Amount: ₹ <span className="font-bold text-xl">{calcData?.bajari.totalSellAmount}</span>
+                </p>
               </div>
             </div>
           </div>
-          <div>
-            <h3 className="font-semibold">Makai</h3>
-            <div className="flex  gap-8">
-              <div className="flex flex-col">
+          <div className="border-t p-2 ">
+            <h3 className="font-semibold text-center">Makai</h3>
+            <div className="flex md:flex-row flex-wrap w-full justify-center  gap-4">
+              <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
+                <p className="text-center mb-2 font-semibold">Total Buy</p>
                 <p>
-                  Buy Stock:{" "}
-                  {calcData?.makai.totalBuyQuantity}{" "}
+                  Stock:{" "}
+                  <span className="font-bold text-xl">
+                    {calcData?.makai.totalBuyQuantity}{" "}
+                  </span>
                   kg
                 </p>
                 <p>
-                  Buy Amount: ₹
-                  {calcData?.makai.totalBuyAmount}
+                  Amount: ₹
+                  <span className="font-bold text-xl">
+                    {calcData?.makai.totalBuyAmount}
+                  </span>
                 </p>
               </div>
-              <div className="flex flex-col">
+              <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
+                <p className="text-center mb-2 font-semibold">Total Sell</p>
                 <p>
-                  Sell Stock:{" "}
-                  {calcData?.makai.totalSellQuantity}{" "}
+                  Stock:
+                  <span className="font-bold text-xl">
+                    {calcData?.makai.totalSellQuantity}{" "}
+                  </span>
                   kg
                 </p>
                 <p>
-                  sell Amount: ₹
-                  {calcData?.makai.totalSellAmount}
+                  Amount: ₹ ₹
+                  <span className="font-bold text-xl">
+                    {calcData?.makai.totalSellAmount}
+                  </span>
                 </p>
               </div>
             </div>
           </div>
         </div>
-       
       </CardContent>
     </Card>
   );
