@@ -139,7 +139,7 @@ export default function StockOverview() {
                   <span className="font-bold text-xl">
                     {calcData?.bajari.totalBuyQuantity}
                   </span>
-                  kg
+                  {" "}kg
                 </p>
                 <p>
                   Amount: ₹{" "}
