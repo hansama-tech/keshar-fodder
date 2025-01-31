@@ -6,7 +6,7 @@ export default function Header() {
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <h1 className="text-2xl font-bold">Fodder Co.</h1>
         <nav>
-          <ul className="flex space-x-4">
+          {/* <ul className="flex space-x-4">
             <li>
               <Link href="/" className="text-blue-600 hover:text-blue-800">
                 Dashboard
@@ -22,7 +22,7 @@ export default function Header() {
                 Reports
               </Link>
             </li>
-          </ul>
+          </ul> */}
         </nav>
       </div>
     </header>

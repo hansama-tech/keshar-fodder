@@ -47,25 +47,7 @@ const initialTransactions = [
     sellAmount: 18000,
     buyQuantity: 800,
     buyAmount: 40000,
-  },
-  {
-    id: 3,
-    date: "2023-06-30",
-    fodderType: "Bajari",
-    sellQuantity: 600,
-    sellAmount: 36000,
-    buyQuantity: 1200,
-    buyAmount: 60000,
-  },
-  {
-    id: 4,
-    date: "2023-06-30",
-    fodderType: "Makai",
-    sellQuantity: 400,
-    sellAmount: 24000,
-    buyQuantity: 900,
-    buyAmount: 45000,
-  },
+  }
 ];
 
 export default function TransactionList() {
@@ -95,7 +77,7 @@ export default function TransactionList() {
   }, []);
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow">
+    <div className="bg-white p-2 md:p-6 rounded-lg shadow">
       <h2 className="text-xl font-semibold mb-4">દૈનિક વ્યવહારો</h2>
       <div className="mb-4">
         <Label htmlFor="dateFilter">Filter by Date</Label>
@@ -130,9 +112,9 @@ export default function TransactionList() {
           {transactionDatas.map((transaction) => (
             <div
               key={transaction.id}
-              className="border rounded-lg p-2 flex flex-wrap  gap-7 "
+              className="border rounded-lg p-2 flex flex-wrap  gap-4 "
             >
-              <p>
+              <p className="font-bold">
                 {new Date(transaction.date)
                   .toLocaleDateString("en-GB")
                   .split("/")
@@ -150,9 +132,9 @@ export default function TransactionList() {
               <p className="">
                 ખરીદેલી કુલ રકમ (₹) <span>{transaction.buyAmount}</span>
               </p>
-              <div>
-                <PenBox className="size-2" />
-                <Delete />
+              <div className="flex gap-4 ">
+                <PenBox className=" cursor-pointer" />
+                <Delete className="text-red-700 cursor-pointer" />
               </div>
             </div>
           ))}
