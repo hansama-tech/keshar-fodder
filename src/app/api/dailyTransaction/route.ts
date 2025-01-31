@@ -13,13 +13,13 @@ export async function POST(req: Request) {
 }
 
 export async function GET(req: Request) {
-  try {
+  // try {
     const fodderData = await db.dailyTransaction.findMany();
     return NextResponse.json({ SUCCESS: true, data: fodderData });
-  } catch (err) {
-    console.error("GET Error:", err);
-    return NextResponse.json({ SUCCESS: false, error: err });
-  }
+  // } catch (err) {
+  //   console.error("GET Error:", err);
+  //   return NextResponse.json({ SUCCESS: false, error: err });
+  // }
 }
 export async function PUT(req: Request) {
   try {
