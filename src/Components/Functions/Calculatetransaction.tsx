@@ -10,7 +10,7 @@ interface Transaction {
 
 export default function calculateFodderTotals(data: Transaction) {
   if (Array.isArray(data)) {
-    const result: Record<string, any> = {};
+    const result: Record<string,any> = {};
 
     const calcuData = data?.forEach((entry: any) => {
       const { fodderType, buyQuantity, buyAmount, sellQuantity, sellAmount } =
