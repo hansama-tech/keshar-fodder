@@ -21,3 +21,20 @@ export async function GET(req: Request) {
     return NextResponse.json({ SUCCESS: false, error: err });
   }
 }
+export async function PUT(req: Request) {
+  try {
+    const url = new URL(req.url);
+    const transId = url.searchParams.get("transId");
+    const data = await req.json();
+    if (transId) {
+      const fodderData = await db.dailyTransaction.update({
+        where: { id: transId },
+        data: data,
+      });
+      return NextResponse.json({ SUCCESS: true, data: fodderData });
+    }
+  } catch (err) {
+    console.error("GET Error:", err);
+    return NextResponse.json({ SUCCESS: false, error: err });
+  }
+}

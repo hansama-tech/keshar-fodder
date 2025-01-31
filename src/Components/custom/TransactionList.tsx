@@ -27,6 +27,7 @@ import { format } from "date-fns";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import axios from "axios";
+import TransEdit from "./TransEdit";
 
 // Mock data for demonstration
 const initialTransactions = [
@@ -47,7 +48,7 @@ const initialTransactions = [
     sellAmount: 18000,
     buyQuantity: 800,
     buyAmount: 40000,
-  }
+  },
 ];
 
 export default function TransactionList() {
@@ -133,7 +134,7 @@ export default function TransactionList() {
                 ખરીદેલી કુલ રકમ (₹) <span>{transaction.buyAmount}</span>
               </p>
               <div className="flex gap-4 ">
-                <PenBox className=" cursor-pointer" />
+                <TransEdit data={transaction}/>
                 <Delete className="text-red-700 cursor-pointer" />
               </div>
             </div>

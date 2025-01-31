@@ -24,7 +24,7 @@ export default function Home() {
           <div>
             <DailySummary />
             <StockOverview />
-            <VisualReports />
+            {/* <VisualReports /> */}
             {/* <DetailedReports/> */}
           </div>
         </div>
