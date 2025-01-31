@@ -17,7 +17,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/Components/ui/popover";
-import { Calendar as CalendarIcon } from "lucide-react";
+import {
+  Calendar as CalendarIcon,
+  Delete,
+  Drumstick,
+  PenBox,
+} from "lucide-react";
 import { format } from "date-fns";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
@@ -120,7 +125,40 @@ export default function TransactionList() {
         </div>
         {/* <DatePicker id="dateFilter" selected={selectedDate} onSelect={(date) => setSelectedDate(date)} /> */}
       </div>
-      <Table>
+      <div>
+        <div className="flex flex-col gap-2">
+          {transactionDatas.map((transaction) => (
+            <div
+              key={transaction.id}
+              className="border rounded-lg p-2 flex flex-wrap  gap-7 "
+            >
+              <p>
+                {new Date(transaction.date)
+                  .toLocaleDateString("en-GB")
+                  .split("/")
+                  .join("-")}
+              </p>
+              <p className="">
+                કતાર પ્રકાર: <span>{transaction.fodderType}</span>
+              </p>
+              <p className="">
+                વેચાયેલ જથ્થો(kg): <span>{transaction.sellQuantity}</span>
+              </p>
+              <p className="">
+                વેચાણ રકમ(₹): <span>{transaction.sellAmount}</span>
+              </p>
+              <p className="">
+                ખરીદેલી કુલ રકમ (₹) <span>{transaction.buyAmount}</span>
+              </p>
+              <div>
+                <PenBox className="size-2" />
+                <Delete />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* <Table>
         <TableHeader>
           <TableRow>
             <TableHead>તારીખ </TableHead>
@@ -148,7 +186,7 @@ export default function TransactionList() {
             </TableRow>
           ))}
         </TableBody>
-      </Table>
+      </Table> */}
     </div>
   );
 }
