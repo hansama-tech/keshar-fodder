@@ -6,6 +6,7 @@ import StockOverview from "@/Components/custom/StockOverview";
 import TransactionList from "@/Components/custom/TransactionList";
 import VisualReports from "@/Components/custom/VisualReports";
 import Image from "next/image";
+import "../app/globals.css";
 
 export default function Home() {
   return (
