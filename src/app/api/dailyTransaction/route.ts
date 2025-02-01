@@ -14,8 +14,8 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   // try {
-    const fodderData = await db.dailyTransaction.findMany();
-    return NextResponse.json({ SUCCESS: true, data: fodderData });
+  const fodderData = await db.dailyTransaction.findMany();
+  return NextResponse.json({ SUCCESS: true, data: fodderData });
   // } catch (err) {
   //   console.error("GET Error:", err);
   //   return NextResponse.json({ SUCCESS:false, error: err });
@@ -32,6 +32,22 @@ export async function PUT(req: Request) {
         data: data,
       });
       return NextResponse.json({ SUCCESS: true, data: fodderData });
+    }
+  } catch (err) {
+    console.error("GET Error:", err);
+    return NextResponse.json({ SUCCESS: false, error: err });
+  }
+}
+
+export async function DELETE(req: Request) {
+  try {
+    const url = new URL(req.url);
+    const transId = url.searchParams.get("transId");
+    if (transId) {
+      const deletTrans = await db.dailyTransaction.delete({
+        where: { id: transId },
+      });
+      return NextResponse.json({ SUCCESS: true });
     }
   } catch (err) {
     console.error("GET Error:", err);
