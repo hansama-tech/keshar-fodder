@@ -18,7 +18,7 @@ export async function GET(req: Request) {
     return NextResponse.json({ SUCCESS: true, data: fodderData });
   // } catch (err) {
   //   console.error("GET Error:", err);
-  //   return NextResponse.json({ SUCCESS: false, error: err });
+  //   return NextResponse.json({ SUCCESS:false, error: err });
   // }
 }
 export async function PUT(req: Request) {

@@ -40,7 +40,6 @@ const TransEdit = (props: any) => {
   const [buyAmount, setBuyAmount] = useState(props.data.buyAmount);
   const [buyPrice, setBuyPrice] = useState(props.data.avgBuyPrice);
 
-  console.log(props.data);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

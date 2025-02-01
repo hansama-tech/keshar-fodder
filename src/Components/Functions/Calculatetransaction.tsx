@@ -1,11 +1,11 @@
 interface Transaction {
   id: string;
-  date: string;
+  date: Date;
   fodderType: string;
-  sellQuantity: string;
-  sellAmount: string;
-  buyQuantity: string;
-  buyAmount: string;
+  sellQuantity: number;
+  sellAmount: number;
+  buyQuantity: number;
+  buyAmount:number;
 }
 
 export default function calculateFodderTotals(data: Transaction) {

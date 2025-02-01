@@ -26,11 +26,11 @@ import { cn } from "@/lib/utils";
 export default function AddTransactionForm() {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [fodderType, setFodderType] = useState("bajari");
-  const [sellQuantity, setSellQuantity] = useState("");
-  const [sellAmount, setSellAmount] = useState("");
-  const [buyQuantity, setBuyQuantity] = useState("");
-  const [buyAmount, setBuyAmount] = useState("");
-  const [buyPrice, setBuyPrice] = useState("");
+  const [sellQuantity, setSellQuantity] = useState<Number>();
+  const [sellAmount, setSellAmount] = useState<Number>();
+  const [buyQuantity, setBuyQuantity] = useState<Number>();
+  const [buyAmount, setBuyAmount] = useState<Number>();
+  const [buyPrice, setBuyPrice] = useState<Number>();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -49,11 +49,11 @@ export default function AddTransactionForm() {
     }
     setDate(new Date());
     setFodderType("bajari");
-    setSellQuantity("");
-    setSellAmount("");
-    setBuyQuantity("");
-    setBuyAmount("");
-    setBuyPrice("")
+    setSellQuantity(0);
+    setSellAmount(0);
+    setBuyQuantity(0);
+    setBuyAmount(0);
+    setBuyPrice(0);
   };
 
   return (
@@ -110,7 +110,7 @@ export default function AddTransactionForm() {
             id="sellQuantity"
             type="number"
             value={sellQuantity}
-            onChange={(e) => setSellQuantity(e.target.value)}
+            onChange={(e) => setSellQuantity(Number(e.target.value) || 0)}
             placeholder="Enter sell quantity"
           />
         </div>
@@ -121,7 +121,7 @@ export default function AddTransactionForm() {
             id="sellAmount"
             type="number"
             value={sellAmount}
-            onChange={(e) => setSellAmount(e.target.value)}
+            onChange={(e) => setSellAmount(Number(e.target.value) || 0)}
             placeholder="Enter sell amount"
           />
         </div>
@@ -132,7 +132,7 @@ export default function AddTransactionForm() {
             id="buyQuantity"
             type="number"
             value={buyQuantity}
-            onChange={(e) => setBuyQuantity(e.target.value)}
+            onChange={(e) => setBuyQuantity(Number(e.target.value) || 0)}
             placeholder="Enter buy quantity"
           />
         </div>
@@ -143,7 +143,7 @@ export default function AddTransactionForm() {
             id="buyAmount"
             type="number"
             value={buyAmount}
-            onChange={(e) => setBuyAmount(e.target.value)}
+            onChange={(e) => setBuyAmount(Number(e.target.value) || 0)}
             placeholder="Enter buy amount"
           />
         </div>
@@ -154,7 +154,7 @@ export default function AddTransactionForm() {
             id="buyPrice"
             type="number"
             value={buyPrice}
-            onChange={(e) => setBuyPrice(e.target.value)}
+            onChange={(e) => setBuyPrice(Number(e.target.value) || 0)}
             placeholder="Enter buy Price"
           />
         </div>

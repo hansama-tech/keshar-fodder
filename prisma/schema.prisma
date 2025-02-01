@@ -17,14 +17,14 @@ model DailyTransaction {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   date          DateTime @default(now())
   fodderType    String // 'Bajari' or 'Makai' – The type of fodder for the transaction
-  sellQuantity  String // Total quantity sold (kg) for the day
-  sellAmount    String? // Total amount earned from sales (₹) for the day
-  buyQuantity   String? // Total quantity bought (kg) for the day
-  buyAmount     String? // Total amount spent on purchases (₹) for the day
-  stockQuantity String? // Total quantity of fodder left at the end of the day (kg)
-  stockValue    String? // Total value of remaining stock (₹) at the end of the day
-  avgBuyPrice   String? // Average buy price per kilogram (₹) for the day
-  avgSellPrice  String? // Average sell price per kilogram (₹) for the day
+  sellQuantity  Float // Total quantity sold (kg) for the day
+  sellAmount    Float? // Total amount earned from sales (₹) for the day
+  buyQuantity   Float? // Total quantity bought (kg) for the day
+  buyAmount     Float? // Total amount spent on purchases (₹) for the day
+  stockQuantity Float? // Total quantity of fodder left at the end of the day (kg)
+  stockValue    Float? // Total value of remaining stock (₹) at the end of the day
+  avgBuyPrice   Float? // Average buy price per kilogram (₹) for the day
+  avgSellPrice  Float? // Average sell price per kilogram (₹) for the day
 
   // Helper function to compute total stock value
   // @computed

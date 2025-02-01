@@ -122,7 +122,10 @@ export default function TransactionList() {
                   .join("-")}
               </p>
               <p className="">
-                કતાર પ્રકાર: <span>{transaction.fodderType}</span>
+                કતાર પ્રકાર:{" "}
+                <span>
+                  {transaction.fodderType === "bajari" ? "બાજરી" : "મકાઈ"}
+                </span>
               </p>
               <p className="">
                 વેચાયેલ જથ્થો(kg): <span>{transaction.sellQuantity}</span>
@@ -134,7 +137,7 @@ export default function TransactionList() {
                 ખરીદેલી કુલ રકમ (₹) <span>{transaction.buyAmount}</span>
               </p>
               <div className="flex gap-4 ">
-                <TransEdit data={transaction}/>
+                <TransEdit data={transaction} />
                 <Delete className="text-red-700 cursor-pointer" />
               </div>
             </div>
