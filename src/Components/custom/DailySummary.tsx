@@ -65,10 +65,10 @@ export default function DailySummary() {
   //   dailySummary.bajari.buy.amount + dailySummary.makai.buy.amount;
   // const netEarnings = totalSellAmount - totalBuyAmount;
  
-  if(transactionDatas){
+  // if(transactionDatas){
 
-    console.log(calculateFodderTotals(transactionDatas));
-  }
+  //   console.log(calculateFodderTotals(transactionDatas));
+  // }
 
 
   return (
