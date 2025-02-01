@@ -6,12 +6,12 @@ import axios from "axios";
 import calculateFodderTotals from "../Functions/Calculatetransaction";
 interface Transaction {
   id: string;
-  date: string;
-  fodderType: string;
-  sellQuantity: string;
-  sellAmount: string;
-  buyQuantity: string;
-  buyAmount: string;
+  date: Date;
+  fodderType: number;
+  sellQuantity: number;
+  sellAmount: number;
+  buyQuantity: number;
+  buyAmount: number;
 }
 
 export default function DailySummary() {
