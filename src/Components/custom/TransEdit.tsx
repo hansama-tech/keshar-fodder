@@ -40,7 +40,6 @@ const TransEdit = (props: any) => {
   const [buyAmount, setBuyAmount] = useState(props.data.buyAmount);
   const [buyPrice, setBuyPrice] = useState(props.data.avgBuyPrice);
 
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
@@ -56,6 +55,7 @@ const TransEdit = (props: any) => {
           avgBuyPrice: buyPrice,
         }
       );
+      window.location.replace("/");
     } catch (err) {
       console.log("something wrong", err);
     }
@@ -65,7 +65,8 @@ const TransEdit = (props: any) => {
     <main>
       <Dialog>
         <DialogTrigger>
-        <PenBox className=" cursor-pointer" /></DialogTrigger>
+          <PenBox className=" cursor-pointer" />
+        </DialogTrigger>
         <DialogContent>
           <DialogHeader>
             <DialogTitle> દૈનિક વ્યવહાર Update</DialogTitle>

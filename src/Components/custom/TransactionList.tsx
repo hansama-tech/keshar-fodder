@@ -2,13 +2,17 @@
 
 import { useEffect, useState } from "react";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/Components/ui/table";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/Components/ui/alert-dialog";
+
 // import { DatePicker } from "@/components/ui/date-picker"
 import { Label } from "@/Components/ui/label";
 import { Calendar } from "@/Components/ui/calendar";
@@ -77,6 +81,20 @@ export default function TransactionList() {
     getTransactionData();
   }, []);
 
+  const deletTrans = async (transId: any) => {
+    if (transId) {
+      try {
+        const transdata = await axios.delete(
+          `/api/dailyTransaction?transId=${transId}`
+        );
+        window.location.replace("/");
+        console.log("delete Trans Successfully");
+      } catch (err) {
+        console.error("something wrong", err);
+      }
+    }
+  };
+
   return (
     <div className="bg-white p-2 md:p-6 rounded-lg shadow">
       <h2 className="text-xl font-semibold mb-4">દૈનિક વ્યવહારો</h2>
@@ -138,7 +156,31 @@ export default function TransactionList() {
               </p>
               <div className="flex gap-4 ">
                 <TransEdit data={transaction} />
-                <Delete className="text-red-700 cursor-pointer" />
+
+                <AlertDialog>
+                  <AlertDialogTrigger>
+                    {" "}
+                    <Delete className="text-red-700 cursor-pointer" />
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you absolutely sure?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete Transaction and remove your data from our
+                        servers.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction onClick={()=>deletTrans(transaction.id)}>
+                        Continue
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             </div>
           ))}
