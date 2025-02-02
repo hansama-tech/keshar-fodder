@@ -39,6 +39,7 @@ export async function PUT(req: Request) {
   }
 }
 
+
 export async function DELETE(req: Request) {
   try {
     const url = new URL(req.url);
