@@ -154,6 +154,9 @@ export default function TransactionList() {
               <p className="">
                 ખરીદેલી કુલ રકમ (₹) <span>{transaction.buyAmount}</span>
               </p>
+              <p className="">
+                ખરીદેલી કુલ જથ્થો (₹) <span>{transaction.buyQuantity}</span>
+              </p>
               
               <div className="flex gap-4 ">
                 <TransEdit data={transaction} />
