@@ -26,6 +26,8 @@ export default function StockOverview() {
     },
   });
 
+
+
   const [transactionDatas, setTransactionDatas] = useState<Transaction>();
   const [calcData, setCalcData] = useState<any>();
   const getTransactionData = async () => {
