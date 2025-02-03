@@ -102,8 +102,8 @@ export default function StockOverview() {
                     {calcData?.bajari?.totalBuyQuantity +
                       (calcData?.makai?.totalBuyQuantity ?calcData?.makai?.totalBuyQuantity : 0) 
                     -
-                    calcData?.bajari?.totalSellAmount -
-                      (calcData?.makai?.totalSellAmount ? calcData?.makai?.totalSellAmount: 0 )}
+                    calcData?.bajari?.totalSellQuantity -
+                      (calcData?.makai?.totalSellQuantity ? calcData?.makai?.totalSellQuantity: 0 )}
                   </span>
                   kg
                 </p>
