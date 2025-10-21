@@ -19,7 +19,7 @@ export async function GET(req: Request) {
 
     // 🎆 Define both Diwali dates (you can update every year)
     const previousDiwali = new Date("2024-11-01"); // previous year's Diwali
-    const thisDiwali = new Date("2025-10-29"); // this year's Diwali
+    const thisDiwali = new Date("2025-10-20"); // this year's Diwali
 
     let fodderData;
 
@@ -50,6 +50,9 @@ export async function GET(req: Request) {
         orderBy: { date: "desc" },
       });
     }
+    fodderData = fodderData.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
 
     return NextResponse.json({ SUCCESS: true, data: fodderData });
   } catch (err) {

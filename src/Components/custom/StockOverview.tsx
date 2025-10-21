@@ -53,6 +53,7 @@ export default function StockOverview(props: any) {
     if (transactionDatas) {
       const calculateData = calculateFodderTotals(transactionDatas);
       setCalcData(calculateData);
+      console.log(calculateData);
     }
   }, [transactionDatas]);
 
@@ -76,8 +77,8 @@ export default function StockOverview(props: any) {
                       calcData?.bajari?.totalBuyQuantity +
                         (calcData?.makai?.totalBuyQuantity
                           ? calcData?.makai?.totalBuyQuantity
-                          : 0,
-                        "kg")
+                          : 0),
+                      "kg"
                     )}
                   </span>
                 </p>
@@ -85,10 +86,14 @@ export default function StockOverview(props: any) {
                   રકમ:
                   <span className="font-bold text-xl">
                     {formatCurrency(
-                      calcData?.makai?.totalBuyAmount
-                        ? calcData?.makai?.totalBuyAmount
-                        : 0
+                      calcData?.bajari?.totalBuyAmount
+                        ? calcData?.bajari?.totalBuyAmount
+                        : 0 +
+                            (calcData?.makai?.totalBuyAmount
+                              ? calcData?.makai?.totalBuyAmount
+                              : 0)
                     )}
+                    {}
                   </span>
                 </p>
               </div>
@@ -134,6 +139,23 @@ export default function StockOverview(props: any) {
                           : 0),
                       "kg"
                     )}
+                  </span>
+                </p>
+                <p className="text-center">
+                  <span className="font-bold text-xl">
+                    {formatCurrency(
+                      (calcData?.bajari?.totalBuyAmount
+                        ? calcData?.bajari?.totalBuyAmount
+                        : 0 +
+                          (calcData?.makai?.totalBuyAmount
+                            ? calcData?.makai?.totalBuyAmount
+                            : 0)) -
+                        calcData?.bajari?.totalSellAmount +
+                        (calcData?.makai?.totalSellAmount
+                          ? calcData?.makai?.totalSellAmount
+                          : 0)
+                    )}
+                    {}
                   </span>
                 </p>
               </div>
@@ -216,7 +238,7 @@ export default function StockOverview(props: any) {
                   </span>
                 </p>
                 <p>
-                  રકમ: ₹ ₹
+                  રકમ:
                   <span className="font-bold text-xl">
                     {formatCurrency(
                       calcData?.makai?.totalSellAmount
