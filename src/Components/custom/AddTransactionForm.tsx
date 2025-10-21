@@ -38,11 +38,11 @@ export default function AddTransactionForm() {
       const FooderData = await axios.post("/api/dailyTransaction", {
         date,
         fodderType,
-        sellQuantity,
-        sellAmount,
-        buyQuantity,
-        buyAmount,
-        avgBuyPrice: buyPrice,
+        sellQuantity: sellQuantity || 0,
+        sellAmount: sellAmount || 0,
+        buyQuantity: buyQuantity || 0,
+        buyAmount: buyAmount || 0,
+        avgBuyPrice: buyPrice || 0,
       });
     } catch (err) {
       console.log("something wrong", err);
