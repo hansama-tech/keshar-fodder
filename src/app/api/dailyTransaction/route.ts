@@ -13,14 +13,51 @@ export async function POST(req: Request) {
 }
 
 export async function GET(req: Request) {
-  // try {
-  const fodderData = await db.dailyTransaction.findMany();
-  return NextResponse.json({ SUCCESS: true, data: fodderData });
-  // } catch (err) {
-  //   console.error("GET Error:", err);
-  //   return NextResponse.json({ SUCCESS:false, error: err });
-  // }
+  try {
+    const { searchParams } = new URL(req.url);
+    const period = searchParams.get("period") || "all";
+
+    // 🎆 Define both Diwali dates (you can update every year)
+    const previousDiwali = new Date("2024-11-01"); // previous year's Diwali
+    const thisDiwali = new Date("2025-10-29"); // this year's Diwali
+
+    let fodderData;
+
+    if (period === "gaya_varsh") {
+      // From previous Diwali to this Diwali
+      fodderData = await db.dailyTransaction.findMany({
+        where: {
+          date: {
+            gte: previousDiwali,
+            lt: thisDiwali,
+          },
+        },
+        orderBy: { date: "desc" },
+      });
+    } else if (period === "diwali_pachhi") {
+      // After this Diwali
+      fodderData = await db.dailyTransaction.findMany({
+        where: {
+          date: {
+            gte: thisDiwali,
+          },
+        },
+        orderBy: { date: "desc" },
+      });
+    } else {
+      // All
+      fodderData = await db.dailyTransaction.findMany({
+        orderBy: { date: "desc" },
+      });
+    }
+
+    return NextResponse.json({ SUCCESS: true, data: fodderData });
+  } catch (err) {
+    console.error("GET Error:", err);
+    return NextResponse.json({ SUCCESS: false, error: err });
+  }
 }
+
 export async function PUT(req: Request) {
   try {
     const url = new URL(req.url);
@@ -38,7 +75,6 @@ export async function PUT(req: Request) {
     return NextResponse.json({ SUCCESS: false, error: err });
   }
 }
-
 
 export async function DELETE(req: Request) {
   try {

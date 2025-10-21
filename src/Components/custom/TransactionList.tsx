@@ -12,6 +12,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/Components/ui/alert-dialog";
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from "@/components/ui/select";
 
 // import { DatePicker } from "@/components/ui/date-picker"
 import { Label } from "@/Components/ui/label";
@@ -32,6 +39,15 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import axios from "axios";
 import TransEdit from "./TransEdit";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { ScrollArea } from "../ui/scroll-area";
 
 // Mock data for demonstration
 const initialTransactions = [
@@ -55,12 +71,15 @@ const initialTransactions = [
   },
 ];
 
-export default function TransactionList() {
+export default function TransactionList(props: any) {
   const [transactionDatas, setTransactionDatas] = useState(initialTransactions);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     new Date()
   );
   const [date, setDate] = useState<Date | undefined>(new Date());
+  const [days, setDays] = useState(props.days || "diwali_pachhi");
+
+  console.log(props);
 
   const filteredTransactions = selectedDate
     ? transactionDatas.filter(
@@ -70,8 +89,10 @@ export default function TransactionList() {
 
   const getTransactionData = async () => {
     try {
-      const Data = await axios.get("/api/dailyTransaction");
-      setTransactionDatas(Data.data.data.reverse());
+      const res = await axios.get(
+        `/api/dailyTransaction?period=${props.days || days}`
+      );
+      setTransactionDatas(res.data.data.reverse());
     } catch (err) {
       console.log("something wrong", err);
     }
@@ -80,6 +101,10 @@ export default function TransactionList() {
   useEffect(() => {
     getTransactionData();
   }, []);
+
+  useEffect(() => {
+    getTransactionData();
+  }, [props.days]);
 
   const deletTrans = async (transId: any) => {
     if (transId) {
@@ -98,9 +123,9 @@ export default function TransactionList() {
   return (
     <div className="bg-white p-2 md:p-6 rounded-lg shadow">
       <h2 className="text-xl font-semibold mb-4">દૈનિક વ્યવહારો</h2>
-      <div className="mb-4">
-        <Label htmlFor="dateFilter">Filter by Date</Label>
-        <div>
+      <div className="mb-4 flex justify-between align-bottom">
+        <div className="grid gap-1">
+          <Label htmlFor="dateFilter">Filter by Date</Label>
           <Popover>
             <PopoverTrigger asChild>
               <Button
@@ -124,70 +149,86 @@ export default function TransactionList() {
             </PopoverContent>
           </Popover>
         </div>
+        {/* <div>
+          <Select value={days} onValueChange={setDays}>
+            <SelectTrigger className="w-fit">
+              <SelectValue placeholder="Select period" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="diwali_pela">આ દિવાળી પહેલા</SelectItem>
+              <SelectItem value="diwali_pachhi">દિવાળી પછી</SelectItem>
+              <SelectItem value="all">બધા દિવસો</SelectItem>
+            </SelectContent>
+          </Select>
+        </div> */}
         {/* <DatePicker id="dateFilter" selected={selectedDate} onSelect={(date) => setSelectedDate(date)} /> */}
       </div>
       <div>
         <div className="flex flex-col gap-2">
-          {transactionDatas.map((transaction) => (
-            <div
-              key={transaction.id}
-              className="border rounded-lg p-2 flex flex-wrap  gap-4 "
-            >
-              <p className="font-bold">
-                {new Date(transaction.date)
-                  .toLocaleDateString("en-GB")
-                  .split("/")
-                  .join("-")}
-              </p>
-              <p className="">
-                કતાર પ્રકાર:{" "}
-                <span>
-                  {transaction.fodderType === "bajari" ? "બાજરી" : "મકાઈ"}
-                </span>
-              </p>
-              <p className="">
-                વેચાયેલ જથ્થો(kg): <span>{transaction.sellQuantity}</span>
-              </p>
-              <p className="">
-                વેચાણ રકમ(₹): <span>{transaction.sellAmount}</span>
-              </p>
-              <p className="">
-                ખરીદેલી કુલ રકમ (₹) <span>{transaction.buyAmount}</span>
-              </p>
-              <p className="">
-                ખરીદેલી કુલ જથ્થો (₹) <span>{transaction.buyQuantity}</span>
-              </p>
-              
-              <div className="flex gap-4 ">
-                <TransEdit data={transaction} />
+          <ScrollArea className="h-[100vh] w-full rounded-md ">
+            {transactionDatas.map((transaction) => (
+              <div
+                key={transaction.id}
+                className="border rounded-lg p-2 flex flex-wrap  gap-4 "
+              >
+                <p className="font-bold">
+                  {new Date(transaction.date)
+                    .toLocaleDateString("en-GB")
+                    .split("/")
+                    .join("-")}
+                </p>
+                <p className="">
+                  કતાર પ્રકાર:{" "}
+                  <span>
+                    {transaction.fodderType === "bajari" ? "બાજરી" : "મકાઈ"}
+                  </span>
+                </p>
+                <p className="">
+                  વેચાયેલ જથ્થો(kg): <span>{transaction.sellQuantity}</span>
+                </p>
+                <p className="">
+                  વેચાણ રકમ(₹): <span>{transaction.sellAmount}</span>
+                </p>
+                <p className="">
+                  ખરીદેલી કુલ રકમ (₹) <span>{transaction.buyAmount}</span>
+                </p>
+                <p className="">
+                  ખરીદેલી કુલ જથ્થો (₹) <span>{transaction.buyQuantity}</span>
+                </p>
 
-                <AlertDialog>
-                  <AlertDialogTrigger>
-                    {" "}
-                    <Delete className="text-red-700 cursor-pointer" />
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>
-                        Are you absolutely sure?
-                      </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        This action cannot be undone. This will permanently
-                        delete Transaction and remove your data from our
-                        servers.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction onClick={()=>deletTrans(transaction.id)}>
-                        Continue
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
+                <div className="flex gap-4 ">
+                  <TransEdit data={transaction} />
+
+                  <AlertDialog>
+                    <AlertDialogTrigger>
+                      {" "}
+                      <Delete className="text-red-700 cursor-pointer" />
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you absolutely sure?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently
+                          delete Transaction and remove your data from our
+                          servers.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => deletTrans(transaction.id)}
+                        >
+                          Continue
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </ScrollArea>
         </div>
       </div>
       {/* <Table>

@@ -79,8 +79,6 @@ export default function DetailedReports() {
     getTransactionData();
   });
 
-  console.log("dhddh");
-
   return (
     <Card>
       <CardHeader>

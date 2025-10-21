@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import axios from "axios";
 import calculateFodderTotals from "../Functions/Calculatetransaction";
+import { formatCurrency, formatNumber } from "@/utils/formatCurrency";
 interface Transaction {
   id: string;
   date: Date;
@@ -14,7 +15,7 @@ interface Transaction {
   buyAmount: number;
 }
 
-export default function StockOverview() {
+export default function StockOverview(props: any) {
   const [stockOverview, setStockOverview] = useState({
     bajari: {
       currentStock: 0,
@@ -26,13 +27,14 @@ export default function StockOverview() {
     },
   });
 
-
-
   const [transactionDatas, setTransactionDatas] = useState<Transaction>();
+  const [days, setDays] = useState(props.days || "diwali_pachhi");
   const [calcData, setCalcData] = useState<any>();
   const getTransactionData = async () => {
     try {
-      const Data = await axios.get("/api/dailyTransaction");
+      const Data = await axios.get(
+        `/api/dailyTransaction?period=${props.days || days}`
+      );
       setTransactionDatas(Data.data.data);
     } catch (err) {
       console.log("something wrong", err);
@@ -44,11 +46,16 @@ export default function StockOverview() {
   }, []);
 
   useEffect(() => {
+    getTransactionData();
+  }, [props.days]);
+
+  useEffect(() => {
     if (transactionDatas) {
       const calculateData = calculateFodderTotals(transactionDatas);
       setCalcData(calculateData);
     }
   }, [transactionDatas]);
+
   return (
     <Card className="mb-8">
       <CardHeader>
@@ -65,20 +72,23 @@ export default function StockOverview() {
                   જથ્થો:{" "}
                   <span className="font-bold text-xl">
                     {" "}
-                    {calcData?.bajari?.totalBuyQuantity +
-                      (calcData?.makai?.totalBuyQuantity
-                        ? calcData?.makai?.totalBuyQuantity
-                        : 0)}{" "}
+                    {formatNumber(
+                      calcData?.bajari?.totalBuyQuantity +
+                        (calcData?.makai?.totalBuyQuantity
+                          ? calcData?.makai?.totalBuyQuantity
+                          : 0,
+                        "kg")
+                    )}
                   </span>
-                  kg
                 </p>
                 <p>
-                  રકમ: ₹{" "}
+                  રકમ:
                   <span className="font-bold text-xl">
-                    {calcData?.bajari?.totalBuyAmount +
-                      (calcData?.makai?.totalBuyAmount
+                    {formatCurrency(
+                      calcData?.makai?.totalBuyAmount
                         ? calcData?.makai?.totalBuyAmount
-                        : 0)}
+                        : 0
+                    )}
                   </span>
                 </p>
               </div>
@@ -87,20 +97,24 @@ export default function StockOverview() {
                 <p>
                   જથ્થો:{" "}
                   <span className="font-bold text-xl">
-                    {calcData?.bajari?.totalSellQuantity +
-                      (calcData?.makai?.totalSellQuantity
-                        ? calcData?.makai?.totalSellQuantity
-                        : 0)}
+                    {formatNumber(
+                      calcData?.bajari?.totalSellQuantity +
+                        (calcData?.makai?.totalSellQuantity
+                          ? calcData?.makai?.totalSellQuantity
+                          : 0),
+                      "kg"
+                    )}
                   </span>
-                  kg
                 </p>
                 <p>
-                  રકમ: ₹{" "}
+                  રકમ:
                   <span className="font-bold text-xl">
-                    {calcData?.bajari?.totalSellAmount +
-                      (calcData?.makai?.totalSellAmount
-                        ? calcData?.makai?.totalSellAmount
-                        : 0)}
+                    {formatCurrency(
+                      calcData?.bajari?.totalSellAmount +
+                        (calcData?.makai?.totalSellAmount
+                          ? calcData?.makai?.totalSellAmount
+                          : 0)
+                    )}
                   </span>
                 </p>
               </div>
@@ -109,16 +123,18 @@ export default function StockOverview() {
                 <p className="text-center">
                   <span className="font-bold text-xl">
                     {" "}
-                    {calcData?.bajari?.totalBuyQuantity +
-                      (calcData?.makai?.totalBuyQuantity
-                        ? calcData?.makai?.totalBuyQuantity
-                        : 0) -
-                      calcData?.bajari?.totalSellQuantity -
-                      (calcData?.makai?.totalSellQuantity
-                        ? calcData?.makai?.totalSellQuantity
-                        : 0)}
+                    {formatNumber(
+                      calcData?.bajari?.totalBuyQuantity +
+                        (calcData?.makai?.totalBuyQuantity
+                          ? calcData?.makai?.totalBuyQuantity
+                          : 0) -
+                        calcData?.bajari?.totalSellQuantity -
+                        (calcData?.makai?.totalSellQuantity
+                          ? calcData?.makai?.totalSellQuantity
+                          : 0),
+                      "kg"
+                    )}
                   </span>
-                  kg
                 </p>
               </div>
             </div>
@@ -131,14 +147,13 @@ export default function StockOverview() {
                 <p>
                   જથ્થો:{" "}
                   <span className="font-bold text-xl">
-                    {calcData?.bajari?.totalBuyQuantity}
-                  </span>{" "}
-                  kg
+                    {formatNumber(calcData?.bajari?.totalBuyQuantity, "kg")}
+                  </span>
                 </p>
                 <p>
-                  રકમ: ₹{" "}
+                  રકમ:
                   <span className="font-bold text-xl">
-                    {calcData?.bajari?.totalBuyAmount}
+                    {formatCurrency(calcData?.bajari?.totalBuyAmount)}
                   </span>
                 </p>
               </div>
@@ -147,14 +162,13 @@ export default function StockOverview() {
                 <p>
                   જથ્થો:{" "}
                   <span className="font-bold text-xl">
-                    {calcData?.bajari?.totalSellQuantity}
+                    {formatNumber(calcData?.bajari?.totalSellQuantity, "kg")}
                   </span>{" "}
-                  kg
                 </p>
                 <p>
-                  રકમ: ₹{" "}
+                  રકમ:
                   <span className="font-bold text-xl">
-                    {calcData?.bajari?.totalSellAmount}
+                    {formatCurrency(calcData?.bajari?.totalSellAmount)}
                   </span>
                 </p>
               </div>
@@ -168,18 +182,23 @@ export default function StockOverview() {
                 <p>
                   જથ્થો:{" "}
                   <span className="font-bold text-xl">
-                    {calcData?.makai?.totalBuyQuantity
-                      ? calcData?.makai?.totalBuyQuantity
-                      : 0}{" "}
+                    {" "}
+                    {formatNumber(
+                      calcData?.makai?.totalBuyQuantity
+                        ? calcData?.makai?.totalBuyQuantity
+                        : 0,
+                      "kg"
+                    )}
                   </span>
-                  kg
                 </p>
                 <p>
-                  રકમ: ₹
+                  રકમ:
                   <span className="font-bold text-xl">
-                    {calcData?.makai?.totalBuyAmount
-                      ? calcData?.makai?.totalBuyAmount
-                      : 0}
+                    {formatCurrency(
+                      calcData?.makai?.totalBuyAmount
+                        ? calcData?.makai?.totalBuyAmount
+                        : 0
+                    )}
                   </span>
                 </p>
               </div>
@@ -188,18 +207,22 @@ export default function StockOverview() {
                 <p>
                   જથ્થો:
                   <span className="font-bold text-xl">
-                    {calcData?.makai?.totalSellQuantity
-                      ? calcData?.makai?.totalSellQuantity
-                      : 0}{" "}
+                    {formatNumber(
+                      calcData?.makai?.totalSellQuantity
+                        ? calcData?.makai?.totalSellQuantity
+                        : 0,
+                      "kg"
+                    )}
                   </span>
-                  kg
                 </p>
                 <p>
                   રકમ: ₹ ₹
                   <span className="font-bold text-xl">
-                    {calcData?.makai?.totalSellAmount
-                      ? calcData?.makai?.totalSellAmount
-                      : 0}
+                    {formatCurrency(
+                      calcData?.makai?.totalSellAmount
+                        ? calcData?.makai?.totalSellAmount
+                        : 0
+                    )}
                   </span>
                 </p>
               </div>
