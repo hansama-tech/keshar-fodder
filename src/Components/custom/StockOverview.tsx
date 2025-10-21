@@ -194,6 +194,31 @@ export default function StockOverview(props: any) {
                   </span>
                 </p>
               </div>
+              <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
+                <p className="text-center mb-2 font-semibold">બાકી જથ્થો</p>
+                <p className="text-center">
+                  <span className="font-bold text-xl">
+                    {" "}
+                    {formatNumber(
+                      calcData?.bajari?.totalBuyQuantity +
+                        -calcData?.bajari?.totalSellQuantity,
+                      "kg"
+                    )}
+                  </span>
+                </p>
+                <p className="text-center">
+                  <span className="font-bold text-xl">
+                    {formatCurrency(
+                      (calcData?.bajari?.totalBuyAmount
+                        ? calcData?.bajari?.totalBuyAmount
+                        : 0) -
+                        (calcData?.bajari?.totalSellAmount
+                          ? calcData?.bajari?.totalSellAmount
+                          : 0)
+                    )}
+                  </span>
+                </p>
+              </div>
             </div>
           </div>
           <div className="border-t p-2 ">
@@ -244,6 +269,31 @@ export default function StockOverview(props: any) {
                       calcData?.makai?.totalSellAmount
                         ? calcData?.makai?.totalSellAmount
                         : 0
+                    )}
+                  </span>
+                </p>
+              </div>
+              <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
+                <p className="text-center mb-2 font-semibold">બાકી જથ્થો</p>
+                <p className="text-center">
+                  <span className="font-bold text-xl">
+                    {" "}
+                    {formatNumber(
+                      calcData?.makai?.totalBuyQuantity +
+                        -calcData?.makai?.totalSellQuantity,
+                      "kg"
+                    )}
+                  </span>
+                </p>
+                <p className="text-center">
+                  <span className="font-bold text-xl">
+                    {formatCurrency(
+                      (calcData?.makai?.totalBuyAmount
+                        ? calcData?.makai?.totalBuyAmount
+                        : 0) -
+                        (calcData?.makai?.totalSellAmount
+                          ? calcData?.makaiƒ?.totalSellAmount
+                          : 0)
                     )}
                   </span>
                 </p>
