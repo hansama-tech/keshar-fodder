@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import axios from "axios";
 import calculateFodderTotals from "../Functions/Calculatetransaction";
+import { cn } from "@/lib/utils";
 import { formatCurrency, formatNumber } from "@/utils/formatCurrency";
 interface Transaction {
   id: string;
@@ -58,250 +59,136 @@ export default function StockOverview(props: any) {
   }, [transactionDatas]);
 
   return (
-    <Card className="mb-8">
-      <CardHeader>
-        <CardTitle>સ્ટોક ડેશબોર્ડ</CardTitle>
-      </CardHeader>
-      <CardContent className="p-0 shadow-md">
-        <div className="flex flex-col gap-4">
-          <div className=" p-2">
-            <h3 className="font-semibold text-center">Total</h3>
-            <div className="flex flex-col md:flex-row  w-full justify-center  gap-4">
-              <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
-                <p className="text-center mb-2 font-semibold">કુલ ખરીદેલ</p>
-                <p>
-                  જથ્થો:{" "}
-                  <span className="font-bold text-xl">
-                    {" "}
-                    {formatNumber(
-                      calcData?.bajari?.totalBuyQuantity +
-                        (calcData?.makai?.totalBuyQuantity
-                          ? calcData?.makai?.totalBuyQuantity
-                          : 0),
-                      "kg"
-                    )}
-                  </span>
-                </p>
-                <p>
-                  રકમ:
-                  <span className="font-bold text-xl">
-                    {formatCurrency(
-                      calcData?.bajari?.totalBuyAmount
-                        ? calcData?.bajari?.totalBuyAmount
-                        : 0 +
-                            (calcData?.makai?.totalBuyAmount
-                              ? calcData?.makai?.totalBuyAmount
-                              : 0)
-                    )}
-                    {}
-                  </span>
-                </p>
-              </div>
-              <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
-                <p className="text-center mb-2 font-semibold">કુલ વેચાણ</p>
-                <p>
-                  જથ્થો:{" "}
-                  <span className="font-bold text-xl">
-                    {formatNumber(
-                      calcData?.bajari?.totalSellQuantity +
-                        (calcData?.makai?.totalSellQuantity
-                          ? calcData?.makai?.totalSellQuantity
-                          : 0),
-                      "kg"
-                    )}
-                  </span>
-                </p>
-                <p>
-                  રકમ:
-                  <span className="font-bold text-xl">
-                    {formatCurrency(
-                      calcData?.bajari?.totalSellAmount +
-                        (calcData?.makai?.totalSellAmount
-                          ? calcData?.makai?.totalSellAmount
-                          : 0)
-                    )}
-                  </span>
-                </p>
-              </div>
-              <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
-                <p className="text-center mb-2 font-semibold">બાકી જથ્થો</p>
-                <p className="text-center">
-                  <span className="font-bold text-xl">
-                    {" "}
-                    {formatNumber(
-                      calcData?.bajari?.totalBuyQuantity +
-                        (calcData?.makai?.totalBuyQuantity
-                          ? calcData?.makai?.totalBuyQuantity
-                          : 0) -
-                        calcData?.bajari?.totalSellQuantity -
-                        (calcData?.makai?.totalSellQuantity
-                          ? calcData?.makai?.totalSellQuantity
-                          : 0),
-                      "kg"
-                    )}
-                  </span>
-                </p>
-                <p className="text-center">
-                  <span className="font-bold text-xl">
-                    {formatCurrency(
-                      (calcData?.bajari?.totalBuyAmount
-                        ? calcData?.bajari?.totalBuyAmount
-                        : 0 +
-                          (calcData?.makai?.totalBuyAmount
-                            ? calcData?.makai?.totalBuyAmount
-                            : 0)) -
-                        calcData?.bajari?.totalSellAmount +
-                        (calcData?.makai?.totalSellAmount
-                          ? calcData?.makai?.totalSellAmount
-                          : 0)
-                    )}
-                    {}
-                  </span>
-                </p>
-              </div>
-            </div>
+    <div className="space-y-6 mb-8">
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-bold tracking-tight">સ્ટોક ડેશબોર્ડ</h2>
+      </div>
+
+      {/* Total Section */}
+      <Card className="border-l-4 border-l-primary/50">
+        <CardHeader>
+          <CardTitle className="text-lg">કુલ સારાંશ</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <StatCard
+              title="કુલ ખરીદેલ"
+              quantity={calcData?.bajari?.totalBuyQuantity + (calcData?.makai?.totalBuyQuantity || 0)}
+              amount={calcData?.bajari?.totalBuyAmount + (calcData?.makai?.totalBuyAmount || 0)}
+              type="expense"
+            />
+            <StatCard
+              title="કુલ વેચાણ"
+              quantity={calcData?.bajari?.totalSellQuantity + (calcData?.makai?.totalSellQuantity || 0)}
+              amount={calcData?.bajari?.totalSellAmount + (calcData?.makai?.totalSellAmount || 0)}
+              type="income"
+            />
+            <StatCard
+              title="બાકી જથ્થો"
+              quantity={
+                (calcData?.bajari?.totalBuyQuantity + (calcData?.makai?.totalBuyQuantity || 0)) -
+                (calcData?.bajari?.totalSellQuantity + (calcData?.makai?.totalSellQuantity || 0))
+              }
+              amount={
+                (calcData?.bajari?.totalSellAmount + (calcData?.makai?.totalSellAmount || 0)) -
+                (calcData?.bajari?.totalBuyAmount + (calcData?.makai?.totalBuyAmount || 0))
+              }
+              type="neutral"
+            />
           </div>
-          <div className="border-t p-2">
-            <h3 className="font-semibold text-center">બાજરી</h3>
-            <div className="flex flex-col md:flex-row  w-full justify-center  gap-4">
-              <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
-                <p className="text-center mb-2 font-semibold">કુલ ખરીદેલ</p>
-                <p>
-                  જથ્થો:{" "}
-                  <span className="font-bold text-xl">
-                    {formatNumber(calcData?.bajari?.totalBuyQuantity, "kg")}
-                  </span>
-                </p>
-                <p>
-                  રકમ:
-                  <span className="font-bold text-xl">
-                    {formatCurrency(calcData?.bajari?.totalBuyAmount)}
-                  </span>
-                </p>
-              </div>
-              <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
-                <p className="text-center mb-2 font-semibold">કુલ વેચાણ</p>
-                <p>
-                  જથ્થો:{" "}
-                  <span className="font-bold text-xl">
-                    {formatNumber(calcData?.bajari?.totalSellQuantity, "kg")}
-                  </span>{" "}
-                </p>
-                <p>
-                  રકમ:
-                  <span className="font-bold text-xl">
-                    {formatCurrency(calcData?.bajari?.totalSellAmount)}
-                  </span>
-                </p>
-              </div>
-              <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
-                <p className="text-center mb-2 font-semibold">બાકી જથ્થો</p>
-                <p className="text-center">
-                  <span className="font-bold text-xl">
-                    {" "}
-                    {formatNumber(
-                      calcData?.bajari?.totalBuyQuantity +
-                        -calcData?.bajari?.totalSellQuantity,
-                      "kg"
-                    )}
-                  </span>
-                </p>
-                <p className="text-center">
-                  <span className="font-bold text-xl">
-                    {formatCurrency(
-                      (calcData?.bajari?.totalBuyAmount
-                        ? calcData?.bajari?.totalBuyAmount
-                        : 0) -
-                        (calcData?.bajari?.totalSellAmount
-                          ? calcData?.bajari?.totalSellAmount
-                          : 0)
-                    )}
-                  </span>
-                </p>
-              </div>
+        </CardContent>
+      </Card>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Bajari Section */}
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-primary">બાજરી</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-2 gap-3">
+              <StatCard
+                title="કુલ ખરીદેલ"
+                quantity={calcData?.bajari?.totalBuyQuantity}
+                amount={calcData?.bajari?.totalBuyAmount}
+                compact
+                type="expense"
+              />
+              <StatCard
+                title="કુલ વેચાણ"
+                quantity={calcData?.bajari?.totalSellQuantity}
+                amount={calcData?.bajari?.totalSellAmount}
+                compact
+                type="income"
+              />
             </div>
-          </div>
-          <div className="border-t p-2 ">
-            <h3 className="font-semibold text-center">મકાઈ</h3>
-            <div className="flex flex-col md:flex-row  w-full justify-center  gap-4">
-              <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
-                <p className="text-center mb-2 font-semibold">કુલ ખરીદેલ</p>
-                <p>
-                  જથ્થો:{" "}
-                  <span className="font-bold text-xl">
-                    {" "}
-                    {formatNumber(
-                      calcData?.makai?.totalBuyQuantity
-                        ? calcData?.makai?.totalBuyQuantity
-                        : 0,
-                      "kg"
-                    )}
-                  </span>
-                </p>
-                <p>
-                  રકમ:
-                  <span className="font-bold text-xl">
-                    {formatCurrency(
-                      calcData?.makai?.totalBuyAmount
-                        ? calcData?.makai?.totalBuyAmount
-                        : 0
-                    )}
-                  </span>
-                </p>
-              </div>
-              <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
-                <p className="text-center mb-2 font-semibold">કુલ વેચાણ</p>
-                <p>
-                  જથ્થો:
-                  <span className="font-bold text-xl">
-                    {formatNumber(
-                      calcData?.makai?.totalSellQuantity
-                        ? calcData?.makai?.totalSellQuantity
-                        : 0,
-                      "kg"
-                    )}
-                  </span>
-                </p>
-                <p>
-                  રકમ:
-                  <span className="font-bold text-xl">
-                    {formatCurrency(
-                      calcData?.makai?.totalSellAmount
-                        ? calcData?.makai?.totalSellAmount
-                        : 0
-                    )}
-                  </span>
-                </p>
-              </div>
-              <div className="flex flex-col border p-1 rounded-md w-full shadow-md">
-                <p className="text-center mb-2 font-semibold">બાકી જથ્થો</p>
-                <p className="text-center">
-                  <span className="font-bold text-xl">
-                    {" "}
-                    {formatNumber(
-                      calcData?.makai?.totalBuyQuantity +
-                        -calcData?.makai?.totalSellQuantity,
-                      "kg"
-                    )}
-                  </span>
-                </p>
-                <p className="text-center">
-                  <span className="font-bold text-xl">
-                    {formatCurrency(
-                      (calcData?.makai?.totalBuyAmount
-                        ? calcData?.makai?.totalBuyAmount
-                        : 0) -
-                        (calcData?.makai?.totalSellAmount
-                          ? calcData?.makaiƒ?.totalSellAmount
-                          : 0)
-                    )}
-                  </span>
-                </p>
-              </div>
+            <div className="pt-2 border-t">
+              <StatCard
+                title="બાકી જથ્થો"
+                quantity={calcData?.bajari?.totalBuyQuantity - calcData?.bajari?.totalSellQuantity}
+                amount={calcData?.bajari?.totalSellAmount - calcData?.bajari?.totalBuyAmount}
+                type="neutral"
+              />
             </div>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+          </CardContent>
+        </Card>
+
+        {/* Makai Section */}
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-secondary-foreground">મકાઈ</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-2 gap-3">
+              <StatCard
+                title="કુલ ખરીદેલ"
+                quantity={calcData?.makai?.totalBuyQuantity}
+                amount={calcData?.makai?.totalBuyAmount}
+                compact
+                type="expense"
+              />
+              <StatCard
+                title="કુલ વેચાણ"
+                quantity={calcData?.makai?.totalSellQuantity}
+                amount={calcData?.makai?.totalSellAmount}
+                compact
+                type="income"
+              />
+
+            </div>
+            <div className="pt-2 border-t">
+              <StatCard
+                title="બાકી જથ્થો"
+                quantity={calcData?.makai?.totalBuyQuantity - calcData?.makai?.totalSellQuantity}
+                amount={calcData?.makai?.totalSellAmount - calcData?.makai?.totalBuyAmount}
+                type="neutral"
+              />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
+}
+
+function StatCard({ title, quantity, amount, type = "neutral", compact = false }: { title: string, quantity: number, amount: number, type?: "income" | "expense" | "neutral", compact?: boolean }) {
+  const isIncome = type === "income";
+  const isExpense = type === "expense";
+
+  return (
+    <div className={cn("p-4 rounded-lg border bg-card/50", compact ? "p-3" : "p-4")}>
+      <p className="text-sm text-muted-foreground font-medium mb-1">{title}</p>
+      <div className="flex flex-col">
+        <span className="text-xl font-bold tracking-tight">
+          {formatNumber(quantity || 0, "kg")}
+        </span>
+        <span className={cn(
+          "text-sm font-semibold mt-1",
+          isIncome ? "text-green-600" : isExpense ? "text-red-500" : "text-muted-foreground"
+        )}>
+          {formatCurrency(amount || 0)}
+        </span>
+      </div>
+    </div>
+  )
 }

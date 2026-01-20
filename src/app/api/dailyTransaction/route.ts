@@ -50,9 +50,9 @@ export async function GET(req: Request) {
         orderBy: { date: "desc" },
       });
     }
-    fodderData = fodderData.sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
+    // fodderData = fodderData.sort(
+    //   (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    // );
 
     return NextResponse.json({ SUCCESS: true, data: fodderData });
   } catch (err) {

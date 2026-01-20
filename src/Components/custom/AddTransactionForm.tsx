@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
+import { Card, CardHeader, CardTitle, CardContent } from "@/Components/ui/card";
 import {
   Select,
   SelectContent,
@@ -57,124 +58,132 @@ export default function AddTransactionForm() {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-white p-6 rounded-lg shadow mb-8"
-    >
-      <h2 className="text-xl font-semibold mb-4">દૈનિક વ્યવહાર ઉમેરો</h2>
-      <div className="space-y-4">
-        <div>
-          <Label htmlFor="date">Date</Label>
-          <div>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  className={cn(
-                    "w-[280px] justify-start text-left font-normal",
-                    !date && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {date ? format(date, "PPP") : <span>Pick a date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  selected={date}
-                  onSelect={setDate}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
+    <Card className="mb-8">
+      <CardHeader>
+        <CardTitle>દૈનિક વ્યવહાર ઉમેરો</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <Label htmlFor="date">Date</Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-full justify-start text-left font-normal",
+                      !date && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {date ? format(date, "PPP") : <span>Pick a date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={setDate}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="fodderType">કતાર પ્રકાર</Label>
+              <Select value={fodderType} onValueChange={setFodderType}>
+                <SelectTrigger id="fodderType">
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="bajari">બાજરી</SelectItem>
+                  <SelectItem value="makai">મકાઈ</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+
+
+            <div className="space-y-2 md:col-start-1">
+              <Label htmlFor="sellQuantity">વેચાયેલ જથ્થો (kg)</Label>
+              <Input
+                required
+                id="sellQuantity"
+                type="number"
+                value={sellQuantity ?? ""}
+                onChange={(e) => {
+                  const value = e.target.value ? Number(e.target.value) : undefined;
+                  setSellQuantity(value);
+                }}
+                placeholder="0"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="sellAmount">વેચાણ રકમ (₹)</Label>
+              <Input
+                required
+                id="sellAmount"
+                type="number"
+                value={sellAmount ?? ""}
+                onChange={(e) => {
+                  const value = e.target.value ? Number(e.target.value) : undefined;
+                  setSellAmount(value);
+                }}
+                placeholder="0"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="buyQuantity">ખરીદેલ જથ્થો (kg)</Label>
+              <Input
+                required
+                id="buyQuantity"
+                type="number"
+                value={buyQuantity ?? ""}
+                onChange={(e) => {
+                  const value = e.target.value ? Number(e.target.value) : undefined;
+                  setBuyQuantity(value);
+                }}
+                placeholder="0"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="buyAmount">ખરીદેલી કુલ રકમ (₹)</Label>
+              <Input
+                required
+                id="buyAmount"
+                type="number"
+                value={buyAmount ?? ""}
+                onChange={(e) => {
+                  const value = e.target.value ? Number(e.target.value) : undefined;
+                  setBuyAmount(value);
+                }}
+                placeholder="0"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="buyPrice">ખરીદેલ કિંમત (₹/kg)</Label>
+              <Input
+                required
+                id="buyPrice"
+                type="number"
+                value={buyPrice ?? ""}
+                onChange={(e) => {
+                  const value = e.target.value ? Number(e.target.value) : undefined;
+                  setBuyPrice(value);
+                }}
+                placeholder="0"
+              />
+            </div>
+
           </div>
-          {/* <DatePicker id="date" selected={date} onSelect={(date) => setDate(date)} /> */}
-        </div>
-        <div>
-          <Label htmlFor="fodderType">કતાર પ્રકાર</Label>
-          <Select value={fodderType} onValueChange={setFodderType}>
-            <SelectTrigger id="fodderType">
-              <SelectValue placeholder="Select fodder type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="bajari">બાજરી</SelectItem>
-              <SelectItem value="makai">મકાઈ</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <div>
-          <Label htmlFor="sellQuantity">વેચાયેલ જથ્થો (kg)</Label>
-          <Input
-            required
-            id="sellQuantity"
-            type="number"
-            value={sellQuantity ?? ""}
-            onChange={(e) => {
-              const value = e.target.value ? Number(e.target.value) : undefined;
-              setSellQuantity(value);
-            }}
-            placeholder="Enter sell quantity"
-          />
-        </div>
-        <div>
-          <Label htmlFor="sellAmount">વેચાણ રકમ (₹)</Label>
-          <Input
-            required
-            id="sellAmount"
-            type="number"
-            value={sellAmount ?? ""}
-            onChange={(e) => {
-              const value = e.target.value ? Number(e.target.value) : undefined;
-              setSellAmount(value);
-            }}
-            placeholder="Enter sell amount"
-          />
-        </div>
-        <div>
-          <Label htmlFor="buyQuantity">ખરીદેલ જથ્થો (kg)</Label>
-          <Input
-            required
-            id="buyQuantity"
-            type="number"
-            value={buyQuantity ?? ""}
-            onChange={(e) => {
-              const value = e.target.value ? Number(e.target.value) : undefined;
-              setBuyQuantity(value);
-            }}
-            placeholder="Enter buy quantity"
-          />
-        </div>
-        <div>
-          <Label htmlFor="buyAmount">ખરીદેલી કુલ રકમ (₹)</Label>
-          <Input
-            required
-            id="buyAmount"
-            type="number"
-            value={buyAmount ?? ""}
-            onChange={(e) => {
-              const value = e.target.value ? Number(e.target.value) : undefined;
-              setBuyAmount(value);
-            }}
-            placeholder="Enter buy amount"
-          />
-        </div>
-        <div>
-          <Label htmlFor="buyQuantity">ખરીદેલ કિંમત (₹/kg)</Label>
-          <Input
-            required
-            id="buyPrice"
-            type="number"
-            value={buyPrice ?? ""}
-            onChange={(e) => {
-              const value = e.target.value ? Number(e.target.value) : undefined;
-              setBuyPrice(value);
-            }}
-            placeholder="Enter buy Price"
-          />
-        </div>
-        <Button type="submit">Add Transaction</Button>
-      </div>
-    </form>
+
+          <Button type="submit" className="w-full md:w-auto">Add Transaction</Button>
+        </form>
+      </CardContent>
+    </Card>
   );
 }
