@@ -154,6 +154,7 @@ export default function StockOverview(props: any) {
                 compact
                 type="income"
               />
+
             </div>
             <div className="pt-2 border-t">
               <StatCard
