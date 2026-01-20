@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import axios from "axios";
 import calculateFodderTotals from "../Functions/Calculatetransaction";
@@ -31,7 +31,7 @@ export default function StockOverview(props: any) {
   const [transactionDatas, setTransactionDatas] = useState<Transaction>();
   const [days, setDays] = useState(props.days || "diwali_pachhi");
   const [calcData, setCalcData] = useState<any>();
-  const getTransactionData = async () => {
+  const getTransactionData = useCallback(async () => {
     try {
       const Data = await axios.get(
         `/api/dailyTransaction?period=${props.days || days}`
@@ -40,15 +40,11 @@ export default function StockOverview(props: any) {
     } catch (err) {
       console.log("something wrong", err);
     }
-  };
+  }, [props.days, days]);
 
   useEffect(() => {
     getTransactionData();
-  }, []);
-
-  useEffect(() => {
-    getTransactionData();
-  }, [props.days]);
+  }, [getTransactionData]);
 
   useEffect(() => {
     if (transactionDatas) {

@@ -1,7 +1,7 @@
 "use client";
 
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/Components/ui/card";
 import {
   AlertDialog,
@@ -89,7 +89,7 @@ export default function TransactionList(props: any) {
     )
     : transactionDatas;
 
-  const getTransactionData = async () => {
+  const getTransactionData = useCallback(async () => {
     try {
       const res = await axios.get(
         `/api/dailyTransaction?period=${props.days || days}`
@@ -98,15 +98,11 @@ export default function TransactionList(props: any) {
     } catch (err) {
       console.log("something wrong", err);
     }
-  };
+  }, [props.days, days]);
 
   useEffect(() => {
     getTransactionData();
-  }, []);
-
-  useEffect(() => {
-    getTransactionData();
-  }, [props.days]);
+  }, [getTransactionData]);
 
   const deletTrans = async (transId: any) => {
     if (transId) {
