@@ -16,6 +16,7 @@ interface Transaction {
   buyAmount: number;
 }
 
+
 export default function StockOverview(props: any) {
   const [stockOverview, setStockOverview] = useState({
     bajari: {
