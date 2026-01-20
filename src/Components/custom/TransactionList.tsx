@@ -1,6 +1,8 @@
 "use client";
 
+
 import { useEffect, useState } from "react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/Components/ui/card";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -83,8 +85,8 @@ export default function TransactionList(props: any) {
 
   const filteredTransactions = selectedDate
     ? transactionDatas.filter(
-        (t) => t.date === selectedDate.toISOString().split("T")[0]
-      )
+      (t) => t.date === selectedDate.toISOString().split("T")[0]
+    )
     : transactionDatas;
 
   const getTransactionData = async () => {
@@ -92,7 +94,7 @@ export default function TransactionList(props: any) {
       const res = await axios.get(
         `/api/dailyTransaction?period=${props.days || days}`
       );
-      setTransactionDatas(res.data.data.reverse());
+      setTransactionDatas(res.data.data);
     } catch (err) {
       console.log("something wrong", err);
     }
@@ -121,106 +123,106 @@ export default function TransactionList(props: any) {
   };
 
   return (
-    <div className="bg-white p-2 md:p-6 rounded-lg shadow">
-      <h2 className="text-xl font-semibold mb-4">દૈનિક વ્યવહારો</h2>
-      <div className="mb-4 flex justify-between align-bottom">
-        <div className="grid gap-1">
-          <Label htmlFor="dateFilter">Filter by Date</Label>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant={"outline"}
-                className={cn(
-                  "w-[280px] justify-start text-left font-normal",
-                  !date && "text-muted-foreground"
-                )}
-              >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {date ? format(date, "PPP") : <span>Pick a date</span>}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0">
-              <Calendar
-                mode="single"
-                selected={date}
-                onSelect={setDate}
-                initialFocus
-              />
-            </PopoverContent>
-          </Popover>
+    <Card className="h-full">
+      <CardHeader>
+        <CardTitle>દૈનિક વ્યવહારો</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="mb-6 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-muted-foreground">Filter by Date</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={"outline"}
+                  className={cn(
+                    "w-[240px] justify-start text-left font-normal border-input",
+                    !date && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {date ? format(date, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={date}
+                  onSelect={setDate}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
         </div>
-        {/* <div>
-          <Select value={days} onValueChange={setDays}>
-            <SelectTrigger className="w-fit">
-              <SelectValue placeholder="Select period" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="diwali_pela">આ દિવાળી પહેલા</SelectItem>
-              <SelectItem value="diwali_pachhi">દિવાળી પછી</SelectItem>
-              <SelectItem value="all">બધા દિવસો</SelectItem>
-            </SelectContent>
-          </Select>
-        </div> */}
-        {/* <DatePicker id="dateFilter" selected={selectedDate} onSelect={(date) => setSelectedDate(date)} /> */}
-      </div>
-      <div>
-        <div className="flex flex-col gap-2">
-          <ScrollArea className="h-[100vh] w-full rounded-md ">
+
+        <ScrollArea className="h-[600px] pr-4">
+          <div className="space-y-4">
             {transactionDatas.map((transaction) => (
               <div
                 key={transaction.id}
-                className="border rounded-lg p-2 flex flex-wrap  gap-4 "
+                className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl border bg-card hover:shadow-md transition-all gap-4"
               >
-                <p className="font-bold">
-                  {new Date(transaction.date)
-                    .toLocaleDateString("en-GB")
-                    .split("/")
-                    .join("-")}
-                </p>
-                <p className="">
-                  કતાર પ્રકાર:{" "}
-                  <span>
-                    {transaction.fodderType === "bajari" ? "બાજરી" : "મકાઈ"}
-                  </span>
-                </p>
-                <p className="">
-                  વેચાયેલ જથ્થો(kg): <span>{transaction.sellQuantity}</span>
-                </p>
-                <p className="">
-                  વેચાણ રકમ(₹): <span>{transaction.sellAmount}</span>
-                </p>
-                <p className="">
-                  ખરીદેલી કુલ રકમ (₹) <span>{transaction.buyAmount}</span>
-                </p>
-                <p className="">
-                  ખરીદેલી કુલ જથ્થો (₹) <span>{transaction.buyQuantity}</span>
-                </p>
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold text-lg">
+                      {transaction.fodderType === "bajari" ? "બાજરી" : "મકાઈ"}
+                    </span>
+                    <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
+                      {new Date(transaction.date)
+                        .toLocaleDateString("en-GB")
+                        .split("/")
+                        .join("-")}
+                    </span>
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    કતાર પ્રકાર: {transaction.fodderType === "bajari" ? "બાજરી" : "મકાઈ"}
+                  </div>
+                </div>
 
-                <div className="flex gap-4 ">
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+                  <div className="flex flex-col">
+                    <span className="text-xs text-muted-foreground">વેચાયેલ જથ્થો (kg)</span>
+                    <span className="font-medium">{transaction.sellQuantity}</span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-xs text-muted-foreground">વેચાણ રકમ(₹)</span>
+                    <span className="font-medium text-green-600">+{transaction.sellAmount}</span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-xs text-muted-foreground">ખરીદેલ જથ્થો (kg)</span>
+                    <span className="font-medium">{transaction.buyQuantity}</span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-xs text-muted-foreground">ખરીદેલી કુલ રકમ (₹)</span>
+                    <span className="font-medium text-red-500">-{transaction.buyAmount}</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 pt-2 sm:pt-0 border-t sm:border-t-0 mt-2 sm:mt-0">
                   <TransEdit data={transaction} />
-
                   <AlertDialog>
-                    <AlertDialogTrigger>
-                      {" "}
-                      <Delete className="text-red-700 cursor-pointer" />
+                    <AlertDialogTrigger asChild>
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive/90 hover:bg-destructive/10">
+                        <Delete className="h-4 w-4" />
+                      </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
                         <AlertDialogTitle>
-                          Are you absolutely sure?
+                          Delete Transaction?
                         </AlertDialogTitle>
                         <AlertDialogDescription>
-                          This action cannot be undone. This will permanently
-                          delete Transaction and remove your data from our
-                          servers.
+                          This action cannot be undone. This will permanently remove this record.
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                         <AlertDialogAction
                           onClick={() => deletTrans(transaction.id)}
+                          className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                         >
-                          Continue
+                          Delete
                         </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
@@ -228,38 +230,9 @@ export default function TransactionList(props: any) {
                 </div>
               </div>
             ))}
-          </ScrollArea>
-        </div>
-      </div>
-      {/* <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>તારીખ </TableHead>
-            <TableHead>કતાર પ્રકાર</TableHead>
-            <TableHead>વેચાયેલ જથ્થો (kg)</TableHead>
-            <TableHead>વેચાણ રકમ (₹)</TableHead>
-            <TableHead>ખરીદેલ જથ્થો (kg)</TableHead>
-            <TableHead>ખરીદેલી કુલ રકમ (₹)</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {transactionDatas.map((transaction) => (
-            <TableRow key={transaction.id}>
-              <TableCell>
-                {new Date(transaction.date)
-                  .toLocaleDateString("en-GB")
-                  .split("/")
-                  .join("-")}
-              </TableCell>
-              <TableCell>{transaction.fodderType}</TableCell>
-              <TableCell>{transaction.sellQuantity}</TableCell>
-              <TableCell>{transaction.sellAmount}</TableCell>
-              <TableCell>{transaction.buyQuantity}</TableCell>
-              <TableCell>{transaction.buyAmount}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table> */}
-    </div>
+          </div>
+        </ScrollArea>
+      </CardContent>
+    </Card>
   );
 }
